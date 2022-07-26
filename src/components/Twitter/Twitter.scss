@@ -1,0 +1,35 @@
+@import "../../styles/fonts.scss";
+
+.twitter {
+    position: absolute;
+    bottom: 10%;
+    width: calc(100vw - 120px);
+    @include tachyon-thin;
+    @include tachyon-light;
+
+    .tweet {
+        margin: 0 0 20px;
+        font-size: 2.8rem;
+    }
+
+    &__meta {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        @include tachyon-thin;
+        font-size: 1.9rem;
+        color: white;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    &__middot {
+        padding: 0 10px;
+        // @include tachyon-thin;
+        font-size: 3rem;
+        color: white;
+        line-height: 1.5rem;
+    }
+}

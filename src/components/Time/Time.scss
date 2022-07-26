@@ -1,0 +1,22 @@
+@import "../../styles/fonts.scss";
+
+.time {
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+
+    &__date {
+        @include tachyon-light;
+        font-size: 2rem;
+    }
+
+    &__time {
+        margin: 0;
+        padding-right: 0.8vw;
+        padding-bottom: 10px;
+        @include tachyon-thin;
+        // @include tachyon-light;
+        font-size: 2.9rem;
+        color: white;
+    }
+}
