@@ -10,7 +10,7 @@ function App() {
     <div className="cybotrance">
       <Time />
       <Weather />
-      <Twitter />
+      {/* <Twitter /> */}
     </div>
   );
 }

@@ -36,7 +36,7 @@
   }
 }
 
-.weather-lineup {
+.lineup {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 18px;
@@ -45,6 +45,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    h4 {
+      margin: 0;
+      padding: 0;
+      @include tachyon-light;
+      font-size: 22px;
+      font-size: 1.6rem;
+    }
 
     p {
       margin: 0;
