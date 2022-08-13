@@ -1,6 +1,24 @@
+import { useEffect } from "react";
 import "./Weather.scss";
 
-function Weather() {
+const Weather = () => {
+  useEffect(() => {
+    fetch("http://localhost:3003")
+      .then((response) => {
+        console.log("resolved", response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        console.log('data' + data);
+
+        document.querySelector('.weather-top__temp').innerHTML = data.currentWeather.temperature
+      })
+      .catch((err) => {
+        console.log("error retrieving data", err);
+      });
+  });
+
   return (
     <section className="weather">
       <div className="weather-top">
@@ -39,6 +57,6 @@ function Weather() {
       </div>
     </section>
   );
-}
+};
 
 export default Weather;
