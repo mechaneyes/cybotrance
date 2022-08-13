@@ -2,49 +2,66 @@ import { useState, useEffect } from "react";
 import "./Weather.scss";
 
 const Weather = () => {
-  const d = new Date();
-  let hour = d.getHours();
+
+  const offsetFromGmt = 9
+
+  const formatHours = (offset) => {
+    const d = new Date();
+    let hours = d.getHours();
+    let ampm = hours >= 12 ? 'pm' : 'am';
+    
+    hours += offset
+    hours = hours % 12
+    hours = hours ? hours : 12
+    
+    let strTime = hours + ampm;
+
+    return strTime
+  }
+
+  // formatHours()
+  // formatHours(2)
 
   let hourlyInitial = [
     {
       id: 0,
-      hour: hour,
+      hour: 0,
       temp: 0,
       precipitationChance: 0,
     },
     {
       id: 1,
-      hour: hour + 1,
+      hour: 0,
       temp: 0,
       precipitationChance: 0,
     },
     {
       id: 2,
-      hour: hour + 2,
+      hour: 0,
       temp: 0,
       precipitationChance: 0,
     },
     {
       id: 3,
-      hour: hour + 3,
+      hour: 0,
       temp: 0,
       precipitationChance: 0,
     },
     {
       id: 4,
-      hour: hour + 4,
+      hour: 0,
       temp: 0,
       precipitationChance: 0,
     },
     {
       id: 5,
-      hour: hour + 5,
+      hour: 0,
       temp: 0,
       precipitationChance: 0,
     },
     {
       id: 6,
-      hour: hour + 6,
+      hour: 0,
       temp: 0,
       precipitationChance: 0,
     },
@@ -76,7 +93,7 @@ const Weather = () => {
 
         setCurrTemp(cToF(parseFloat(data.currentWeather.temperature)));
         setCurrHumid(parseFloat(data.currentWeather.humidity) * 100);
-        // console.log('currTemp', currTemp)
+        console.log('data.currentWeather', data.currentWeather)
       })
       .catch((err) => {
         console.log("error retrieving data", err);
@@ -91,12 +108,14 @@ const Weather = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data)
+        // console.log(data);
         // console.log('data.forecastHourly', data.forecastHourly.hours[0])
-        
+
         for (let i = 0; i < 7; i++) {
           hourlyInitial[i].temp = data.forecastHourly.hours[i].temperature;
-          console.log("temp", hourlyInitial[i].temp);
+          // console.log("temp", hourlyInitial[i].temp);
+
+          hourlyInitial[i].hour = formatHours(i + 1)
         }
       })
       .then(() => {
@@ -120,37 +139,30 @@ const Weather = () => {
         <div className="lineup__item lineup__item--0">
           <h4>{cToF(hourlyArray[0].temp, 0)}°</h4>
           <p>{hourlyArray[0].hour}</p>
-          <p>1am</p>
         </div>
         <div className="lineup__item lineup__item--1">
           <h4>{cToF(hourlyArray[1].temp, 0)}°</h4>
           <p>{hourlyArray[1].hour}</p>
-          <p>8pm</p>
         </div>
         <div className="lineup__item lineup__item--2">
           <h4>{cToF(hourlyArray[2].temp, 0)}°</h4>
           <p>{hourlyArray[2].hour}</p>
-          <p>9pm</p>
         </div>
         <div className="lineup__item lineup__item--3">
           <h4>{cToF(hourlyArray[3].temp, 0)}°</h4>
           <p>{hourlyArray[3].hour}</p>
-          <p>1am</p>
         </div>
         <div className="lineup__item lineup__item--4">
           <h4>{cToF(hourlyArray[4].temp, 0)}°</h4>
           <p>{hourlyArray[4].hour}</p>
-          <p>10pm</p>
         </div>
         <div className="lineup__item lineup__item--5">
           <h4>{cToF(hourlyArray[5].temp, 0)}°</h4>
           <p>{hourlyArray[5].hour}</p>
-          <p>11pm</p>
         </div>
         <div className="lineup__item lineup__item--6">
           <h4>{cToF(hourlyArray[6].temp, 0)}°</h4>
           <p>{hourlyArray[6].hour}</p>
-          <p>12am</p>
         </div>
       </div>
     </section>
