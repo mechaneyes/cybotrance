@@ -47,7 +47,7 @@ app.get("/", async (req, res, next) => {
   // console.log(token);
 
   const url =
-    "https://weatherkit.apple.com/api/v1/weather/en/40.7128/74.0060?dataSets=currentWeather&timezone=Europe/London";
+    "https://weatherkit.apple.com/api/v1/weather/en/38.5816/121.4944?dataSets=currentWeather&timezone=Europe/London";
 
   // add the token to your headers
   const config = {

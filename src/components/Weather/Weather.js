@@ -1,7 +1,17 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./Weather.scss";
 
 const Weather = () => {
+  const cToF = (celsius) => {
+    const cTemp = celsius;
+    const cToFahr = (cTemp * 9) / 5 + 32;
+    var message = cTemp + "\xB0C is " + cToFahr + " \xB0F.";
+    console.log(message);
+    return cToFahr.toFixed(1);
+  };
+
+  const [currentTemp, setCurrentTemp] = useState(null)
+
   useEffect(() => {
     fetch("http://localhost:3003")
       .then((response) => {
@@ -10,9 +20,13 @@ const Weather = () => {
       })
       .then((data) => {
         console.log(data);
-        console.log('data' + data);
+        console.log("data" + data);
 
-        document.querySelector('.weather-top__temp').innerHTML = data.currentWeather.temperature
+        let converter
+        converter = parseFloat(data.currentWeather.temperature)
+        converter = cToF(converter)
+        setCurrentTemp(converter)
+        console.log('converter', converter)
       })
       .catch((err) => {
         console.log("error retrieving data", err);
@@ -23,7 +37,7 @@ const Weather = () => {
     <section className="weather">
       <div className="weather-top">
         <h3 className="weather-top__humidity">83%</h3>
-        <h2 className="weather-top__temp">107°</h2>
+        <h2 className="weather-top__temp">{currentTemp}°</h2>
       </div>
       <div className="weather-lineup">
         <div className="weather-lineup__item">
