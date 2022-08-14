@@ -8,20 +8,6 @@ const app = express();
 const port = 3003;
 
 app.use(cors());
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-//   // res.header("Access-Control-Allow-Credentials", "true");
-//   // res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-//   // res.header(
-//   //   "Access-Control-Allow-Headers",
-//   //   "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
-//   // );
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
 
 // ————————————————————————————————————o————————————————————————————————————o create signed token -->
 // ————————————————————————————————————o create signed token —>
@@ -44,11 +30,7 @@ let createToken = () => {
     }
   );
 
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-
-  return config;
+  return { headers: { Authorization: `Bearer ${token}` } };
 };
 
 // ————————————————————————————————————o————————————————————————————————————o Current Weather -->
@@ -56,8 +38,10 @@ let createToken = () => {
 app.get("/current", async (req, res, next) => {
   let config = createToken();
 
+  // Reference Time Zones:
+  // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   const url =
-    "https://weatherkit.apple.com/api/v1/weather/en/38.5816/121.4944?dataSets=currentWeather&timezone=America/Los_Angeles";
+    "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=currentWeather&timezone=Americas/Los_Angeles";
 
   // get the data
   const { data: weatherData } = await axios.get(url, config);
@@ -73,8 +57,7 @@ app.get("/hourly", async (req, res, next) => {
   let config = createToken();
 
   const url =
-    "https://weatherkit.apple.com/api/v1/weather/en/38.5816/121.4944?dataSets=forecastHourly&timeZone=America/Los_Angeles";
-  // "https://weatherkit.apple.com/api/v1/weather/en/38.5816/121.4944?dataSets=forecastHourly&timezone=PST";
+    "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=forecastHourly&timeZone=America/Los_Angeles";
 
   const { data: weatherData } = await axios.get(url, config);
   //console.log(weatherData);

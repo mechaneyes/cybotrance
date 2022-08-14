@@ -2,75 +2,74 @@ import { useState, useEffect } from "react";
 import "./Weather.scss";
 
 const Weather = () => {
-
-  const offsetFromGmt = 9
+  const offsetFromGmt = 9;
 
   const formatHours = (offset) => {
     const d = new Date();
     let hours = d.getHours();
-    let ampm = hours >= 12 ? 'pm' : 'am';
-    
-    hours += offset
-    hours = hours % 12
-    hours = hours ? hours : 12
-    
+    let ampm = hours >= 12 ? "pm" : "am";
+
+    hours += offset;
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+
     let strTime = hours + ampm;
 
-    return strTime
-  }
+    return strTime;
+  };
 
-  // formatHours()
-  // formatHours(2)
+  const formatPrecip = (data, i) => {
+    let mutatePrecip = data.forecastHourly.hours[i].precipitationChance;
+    mutatePrecip *= 100;
+    return mutatePrecip.toFixed(0);
+  };
 
-  let hourlyInitial = [
+  const [currTemp, setCurrTemp] = useState(null);
+  const [currHumid, setCurrHumid] = useState(null);
+  const [hourlyArray, setHourlyArray] = useState([
     {
       id: 0,
       hour: 0,
       temp: 0,
-      precipitationChance: 0,
+      precip: 0,
     },
     {
       id: 1,
       hour: 0,
       temp: 0,
-      precipitationChance: 0,
+      precip: 0,
     },
     {
       id: 2,
       hour: 0,
       temp: 0,
-      precipitationChance: 0,
+      precip: 0,
     },
     {
       id: 3,
       hour: 0,
       temp: 0,
-      precipitationChance: 0,
+      precip: 0,
     },
     {
       id: 4,
       hour: 0,
       temp: 0,
-      precipitationChance: 0,
+      precip: 0,
     },
     {
       id: 5,
       hour: 0,
       temp: 0,
-      precipitationChance: 0,
+      precip: 0,
     },
     {
       id: 6,
       hour: 0,
       temp: 0,
-      precipitationChance: 0,
+      precip: 0,
     },
-  ];
-
-  const [currTemp, setCurrTemp] = useState(null);
-  const [currHumid, setCurrHumid] = useState(null);
-
-  const [hourlyArray, setHourlyArray] = useState(hourlyInitial);
+  ]);
 
   const cToF = (celsius, precision = 1) => {
     const cTemp = celsius;
@@ -89,11 +88,11 @@ const Weather = () => {
         return response.json();
       })
       .then((data) => {
-        // console.log(data);
+        console.log(data);
 
         setCurrTemp(cToF(parseFloat(data.currentWeather.temperature)));
         setCurrHumid(parseFloat(data.currentWeather.humidity) * 100);
-        console.log('data.currentWeather', data.currentWeather)
+        // console.log('data.currentWeather', data.currentWeather)
       })
       .catch((err) => {
         console.log("error retrieving data", err);
@@ -112,11 +111,40 @@ const Weather = () => {
         // console.log('data.forecastHourly', data.forecastHourly.hours[0])
 
         for (let i = 0; i < 7; i++) {
-          hourlyInitial[i].temp = data.forecastHourly.hours[i].temperature;
-          // console.log("temp", hourlyInitial[i].temp);
-
-          hourlyInitial[i].hour = formatHours(i + 1)
+          // hourly[i].temp = data.forecastHourly.hours[i].temperature;
+          // console.log("temp", hourly[i].temp);
+          // hourly[i].precip = data.forecastHourly.hours[i].precipitationChance;
+          // console.log('precip', data.forecastHourly.hours[i].precipitationChance)
+          // hourly[i].hour = formatHours(i + 1)
+          // let updateHourly = [
+          //   ...hourlyArray,
+          //   {
+          //     id: i,
+          //     hour: formatHours(i + 1),
+          //     temp: data.forecastHourly.hours[i].temperature,
+          //     precip: data.forecastHourly.hours[i].precipitationChance,
+          //   },
+          // ];
+          // console.log("updateHourly", updateHourly);
+          // setHourlyArray(updateHourly);
         }
+        const updateHourly = () => {
+          setHourlyArray((current) =>
+            current.map((obj) => {
+              for (let i = 0; i < 7; i++) {
+                if (obj.id === i) {
+                  return {
+                    ...obj,
+                    hour: formatHours(i + 1),
+                    temp: data.forecastHourly.hours[i].temperature,
+                    precip: formatPrecip(data, i),
+                  };
+                }
+              }
+            })
+          );
+        };
+        updateHourly();
       })
       .then(() => {
         // TODO: Push/Pop array items each hour:
@@ -127,7 +155,7 @@ const Weather = () => {
       .catch((err) => {
         console.log("error retrieving data", err);
       });
-  });
+  }, []);
 
   return (
     <section className="weather">
@@ -137,32 +165,39 @@ const Weather = () => {
       </div>
       <div className="lineup">
         <div className="lineup__item lineup__item--0">
-          <h4>{cToF(hourlyArray[0].temp, 0)}°</h4>
-          <p>{hourlyArray[0].hour}</p>
+          <p className="lineup__hour">{hourlyArray[0].hour}</p>
+          <h4 className="lineup__temp">{cToF(hourlyArray[0].temp, 0)}°</h4>
+          <p className="lineup__precip">{hourlyArray[0].precip}%</p>
         </div>
         <div className="lineup__item lineup__item--1">
-          <h4>{cToF(hourlyArray[1].temp, 0)}°</h4>
-          <p>{hourlyArray[1].hour}</p>
+          <p className="lineup__hour">{hourlyArray[1].hour}</p>
+          <h4 className="lineup__temp">{cToF(hourlyArray[1].temp, 0)}°</h4>
+          <p className="lineup__precip">{hourlyArray[1].precip}%</p>
         </div>
         <div className="lineup__item lineup__item--2">
-          <h4>{cToF(hourlyArray[2].temp, 0)}°</h4>
-          <p>{hourlyArray[2].hour}</p>
+          <p className="lineup__hour">{hourlyArray[2].hour}</p>
+          <h4 className="lineup__temp">{cToF(hourlyArray[2].temp, 0)}°</h4>
+          <p className="lineup__precip">{hourlyArray[2].precip}%</p>
         </div>
         <div className="lineup__item lineup__item--3">
-          <h4>{cToF(hourlyArray[3].temp, 0)}°</h4>
-          <p>{hourlyArray[3].hour}</p>
+          <p className="lineup__hour">{hourlyArray[3].hour}</p>
+          <h4 className="lineup__temp">{cToF(hourlyArray[3].temp, 0)}°</h4>
+          <p className="lineup__precip">{hourlyArray[3].precip}%</p>
         </div>
         <div className="lineup__item lineup__item--4">
-          <h4>{cToF(hourlyArray[4].temp, 0)}°</h4>
-          <p>{hourlyArray[4].hour}</p>
+          <p className="lineup__hour">{hourlyArray[4].hour}</p>
+          <h4 className="lineup__temp">{cToF(hourlyArray[4].temp, 0)}°</h4>
+          <p className="lineup__precip">{hourlyArray[4].precip}%</p>
         </div>
         <div className="lineup__item lineup__item--5">
-          <h4>{cToF(hourlyArray[5].temp, 0)}°</h4>
-          <p>{hourlyArray[5].hour}</p>
+          <p className="lineup__hour">{hourlyArray[5].hour}</p>
+          <h4 className="lineup__temp">{cToF(hourlyArray[5].temp, 0)}°</h4>
+          <p className="lineup__precip">{hourlyArray[5].precip}%</p>
         </div>
         <div className="lineup__item lineup__item--6">
-          <h4>{cToF(hourlyArray[6].temp, 0)}°</h4>
-          <p>{hourlyArray[6].hour}</p>
+          <p className="lineup__hour">{hourlyArray[6].hour}</p>
+          <h4 className="lineup__temp">{cToF(hourlyArray[6].temp, 0)}°</h4>
+          <p className="lineup__precip">{hourlyArray[6].precip}%</p>
         </div>
       </div>
     </section>
