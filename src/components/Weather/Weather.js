@@ -110,7 +110,7 @@ const Weather = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         // console.log('data.forecastHourly', data.forecastHourly)
 
         setHourlyArray((current) =>

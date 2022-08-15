@@ -6,8 +6,10 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
     "concurrently": "^7.3.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
@@ -23,7 +25,7 @@
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "DISABLE_ESLINT_PLUGIN=true react-scripts test",
     "client": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
-    "server": "node server/serverWeather.js",
+    "server": "node server/server.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

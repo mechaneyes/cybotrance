@@ -3,6 +3,7 @@ const axios = require("axios");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 let cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 const port = 3003;
@@ -65,6 +66,26 @@ app.get("/hourly", async (req, res, next) => {
   res.json(weatherData);
 });
 
+// ————————————————————————————————————o————————————————————————————————————o Twitter -->
+// ————————————————————————————————————o Twitter —>
+app.get("/twitter", async (req, res, next) => {
+  const twitterConfig = {
+    headers: {
+      Authorization:
+        "Bearer " + process.env.TWITTER_BEARER_TOKEN,
+      Cookie: "guest_id=v1%3A166054213299708709",
+    },
+  };
+
+  const url = "https://api.twitter.com/2/users/208585808/tweets"
+
+  const { data: twitterData } = await axios.get(url, twitterConfig);
+
+  res.json(twitterData);
+});
+
+// ————————————————————————————————————o————————————————————————————————————o Listen -->
+// ————————————————————————————————————o Listen —>
 app.listen(port, () => {
   console.log(`Weather app listening on port ${port}`);
 });
