@@ -1,4 +1,5 @@
 const express = require("express");
+const https = require("node:https");
 const axios = require("axios");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
@@ -31,7 +32,11 @@ let createToken = () => {
     }
   );
 
-  return { headers: { Authorization: `Bearer ${token}` } };
+  return {
+    timeout: 60000,
+    httpsAgent: new https.Agent({ keepAlive: true }),
+    headers: { Authorization: `Bearer ${token}` },
+  };
 };
 
 // ————————————————————————————————————o————————————————————————————————————o Current Weather -->
@@ -61,7 +66,6 @@ app.get("/hourly", async (req, res, next) => {
     "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=forecastHourly&timeZone=America/Los_Angeles";
 
   const { data: weatherData } = await axios.get(url, config);
-  //console.log(weatherData);
 
   res.json(weatherData);
 });
@@ -70,14 +74,15 @@ app.get("/hourly", async (req, res, next) => {
 // ————————————————————————————————————o Twitter —>
 app.get("/twitter", async (req, res, next) => {
   const twitterConfig = {
+    timeout: 60000,
+    httpsAgent: new https.Agent({ keepAlive: true }),
     headers: {
-      Authorization:
-        "Bearer " + process.env.TWITTER_BEARER_TOKEN,
+      Authorization: "Bearer " + process.env.TWITTER_BEARER_TOKEN,
       Cookie: "guest_id=v1%3A166054213299708709",
     },
   };
 
-  const url = "https://api.twitter.com/2/users/208585808/tweets"
+  const url = "https://api.twitter.com/2/users/208585808/tweets";
 
   const { data: twitterData } = await axios.get(url, twitterConfig);
 

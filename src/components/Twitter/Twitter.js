@@ -4,8 +4,8 @@ import "./Twitter.scss";
 // https://twitter.com/howltweeter
 
 const Twitter = () => {
-  const [howler, setHowler] = useState("Allen Ginsberg was here");
-  const [sinceLast, setSinceLast] = useState(0)
+  const [tweet, setTweet] = useState("Allen Ginsberg was here");
+  const [tweetTime, setTweetTime] = useState(0)
 
   // const twitterClient = new TwitterClient({
   //   apiKey: process.env.REACT_APP_TWITTER_CONSUMER_KEY,
@@ -14,10 +14,10 @@ const Twitter = () => {
   //   accessTokenSecret: process.env.REACT_APP_TWITTER_ACCESS_TOKEN_SECRET,
   // });
 
-  let mostRecent;
+  let mostRecentID;
   let sinceLastTweet = 0;
 
-  const checkNewTweet = (data) => {
+  const checkTweets = (data) => {
     fetch("http://localhost:3003/twitter")
       .then((response) => {
         return response.json();
@@ -26,13 +26,20 @@ const Twitter = () => {
         // console.log(data.data[0]);
         let incomingID = data.data[0].id;
 
-        if (incomingID == mostRecent) {
-          sinceLastTweet++;
-          setSinceLast(sinceLastTweet)
+        if (incomingID == mostRecentID) {
+          // Check every 30 seconds, but only update frontend every 60
+          // 
+          sinceLastTweet += 0.5;
+          sinceLastTweet % 1 == 0 ? setTweetTime(sinceLastTweet) : ''
+
           console.log("sinceLastTweet", sinceLastTweet);
         } else {
-          setHowler(data.data[0].text)
-          mostRecent = incomingID;
+          setTweet(data.data[0].text)
+
+          mostRecentID = incomingID;
+          setTweetTime(0)
+          sinceLastTweet = 0
+          
           console.log("new howl");
         }
       })
@@ -42,20 +49,20 @@ const Twitter = () => {
   };
 
   useEffect(() => {
-    checkNewTweet();
+    checkTweets();
     const interval = setInterval(() => {
-      checkNewTweet();
-    }, 10000);
+      checkTweets();
+    }, 30000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <section className="twitter">
-      <p className="tweet">{howler}</p>
+      <p className="tweet">{tweet}</p>
       <div className="twitter__meta">
         <p className="twitter__handle">@HowlTweeter </p>
         <p className="twitter__middot">&middot;</p>
-        <p className="twitter__timestamp">{sinceLast}m</p>
+        <p className="twitter__timestamp">{tweetTime}m</p>
       </div>
     </section>
   );
