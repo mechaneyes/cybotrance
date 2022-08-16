@@ -1,4 +1,4 @@
-# Cybotron
+# Cybotrance
 ### BK Apt Dashboard
 
 ![Figma Sketches](./screenshot-figma.gif)
