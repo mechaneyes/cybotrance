@@ -66,7 +66,6 @@ app.get("/hourly", async (req, res, next) => {
     "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=forecastHourly&timeZone=America/Los_Angeles";
 
   const { data: weatherData } = await axios.get(url, config);
-
   res.json(weatherData);
 });
 
@@ -84,9 +83,50 @@ app.get("/twitter", async (req, res, next) => {
 
   const url = "https://api.twitter.com/2/users/208585808/tweets";
 
-  const { data: twitterData } = await axios.get(url, twitterConfig);
+  const { data: twitterData } = await axios
+    .get(url, twitterConfig)
+    .catch(function (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Error", error.message);
+      }
+      console.log(error.config);
+    });
 
   res.json(twitterData);
+
+  // axios({
+  //   method: "get",
+  //   url: "https://api.twitter.com/2/users/208585808/tweets",
+  //   config: {
+  //     timeout: 60000,
+  //     httpsAgent: new https.Agent({ keepAlive: true }),
+  //     headers: {
+  //       Authorization: "Bearer " + process.env.TWITTER_BEARER_TOKEN,
+  //       Cookie: "guest_id=v1%3A166054213299708709",
+  //     },
+  //   },
+  // })
+  //   .then(function (response) {
+  //     //handle success
+  //     console.log(response.data);
+  //     // res.json(response);
+  //   })
+  //   .catch(function (response) {
+  //     //handle error
+  //     console.log(response);
+  //   });
 });
 
 // ————————————————————————————————————o————————————————————————————————————o Listen -->

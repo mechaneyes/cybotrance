@@ -1,5 +1,8 @@
 # Cybotron
-### BK Dashboard
+### BK Apt Dashboard
+
+![Figma Sketches](./screenshot-figma.gif)
+
 <br>
 
 ## What it is?
@@ -44,7 +47,3 @@ Rounding things out is a JS animation lifted from the [codedoodl.es doodle sourc
 
 https://github.com/fluuuid/codedoodl.es-doodles/tree/master/nicoptere/the-rice-grain-mayhem
 
-<br>
-
-## Design
-![Figma Sketches](./screenshot-figma.gif)

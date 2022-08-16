@@ -1,35 +1,93 @@
+@import "../../styles/breakpoints.scss";
 @import "../../styles/fonts.scss";
 
 .twitter {
-    position: absolute;
-    bottom: 10%;
-    width: calc(100vw - 120px);
+  position: absolute;
+  bottom: 5%;
+  width: calc(100vw - 40px);
+  @include tachyon-thin;
+  @include tachyon-light;
+
+  .tweet {
+    margin: 0 0 20px;
+    font-size: 1.6rem;
+  }
+
+  &__meta {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     @include tachyon-thin;
-    @include tachyon-light;
+    // font-size: 1.9rem;
+    font-size: 1.3rem;
+    color: white;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__middot {
+    padding: 0 10px;
+    // @include tachyon-thin;
+    font-size: 2rem;
+    color: white;
+    line-height: 1.5rem;
+  }
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/@media/aspect-ratio
+  //
+//   @media (max-aspect-ratio: 20/9) {
+//     @include bp(mobOnly) {
+//       bottom: 20px;
+//       width: calc(100% - 40px);
+
+//       .tweet {
+//         font-size: 1.5rem;
+//         color: blue;
+//       }
+
+//       .twitter__meta {
+//         font-size: 1.2rem;
+//       }
+//     }
+//   }
+
+  @media (max-aspect-ratio: 13/16) {
+  }
+
+  @include bp(xxs) {
+    width: calc(100vw - 60px);
 
     .tweet {
-        margin: 0 0 20px;
+      font-size: 2.1rem;
+      color: purple;
+    }
+  }
+
+  @include bp(xs) {
+    width: calc(100vw - 120px);
+
+    .tweet {
+      font-size: 2.4rem;
+      color: red;
+    }
+
+    .twitter__meta {
+        font-size: 1.7rem;
+    }
+  }
+
+  @include bp(md) {
+    bottom: 7%;
+    // width: calc(100vw - 120px);
+
+    .tweet {
         font-size: 2.8rem;
     }
 
-    &__meta {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        @include tachyon-thin;
-        font-size: 1.9rem;
-        color: white;
-
-        p {
-            margin: 0;
-        }
+    .twitter__meta {
+        font-size: 2rem;
     }
-
-    &__middot {
-        padding: 0 10px;
-        // @include tachyon-thin;
-        font-size: 3rem;
-        color: white;
-        line-height: 1.5rem;
-    }
+  }
 }

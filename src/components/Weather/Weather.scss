@@ -1,3 +1,4 @@
+@import "../../styles/breakpoints.scss";
 @import "../../styles/fonts.scss";
 
 .weather {
@@ -20,9 +21,9 @@
     @include tachyon-light;
     // @include tachyon-thin;
     // font-size: 31px;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: white;
-    line-height: 1.5;
+    line-height: 1.8rem;
   }
 
   &__temp {
@@ -31,15 +32,27 @@
     @include tachyon-light;
     // @include tachyon-thin;
     // font-size: 82px;
-    font-size: 5rem;
-    line-height: 82px;
+    font-size: 3rem;
+    line-height: 3rem;
+  }
+
+  @include bp(xxs) {
+    .weather-top__humidity {
+      font-size: 2rem;
+      line-height: 1.5;
+    }
+
+    .weather-top__temp {
+      font-size: 5rem;
+      line-height: 82px;
+    }
   }
 }
 
 .lineup {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 27px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
   @include tachyon-light;
   font-size: 1.6rem;
 
@@ -58,6 +71,10 @@
     flex-direction: column;
     align-items: center;
     gap: 3px;
+
+    &:nth-child(n+5) {
+      display: none;
+    }
   }
 
   &__hour {
@@ -73,5 +90,10 @@
   &__precip {
     font-size: 1rem;
     color: deepskyblue;
+  }
+
+  @include bp(xxs) {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 27px;
   }
 }

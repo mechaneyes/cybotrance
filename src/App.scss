@@ -1,3 +1,5 @@
+@import "./styles/breakpoints.scss";
+
 * {
   box-sizing: border-box;
 }
@@ -8,8 +10,32 @@
   height: 100vh;
   padding: 60px;
   font-size: 16px;
-  color: #FF8A00;
+  color: #ff8a00;
   background-color: black;
+
+  @include bp(mobOnly) {
+    padding: 20px;
+  }
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/@media/aspect-ratio
+  //
+  /* Minimum aspect ratio */
+  // @media (min-aspect-ratio: 6/5) {
+  //   background-color: yellow;
+  // }
+
+  // /* Maximum aspect ratio */
+  // @media (max-aspect-ratio: 13/16) {
+  //   background-color: green;
+  // }
+
+  @include bp(xxs) {
+    padding: 30px;
+  }
+
+  @include bp(xs) {
+    padding: 60px;
+  }
 }
 
 canvas {
