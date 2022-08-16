@@ -18,7 +18,7 @@ const Twitter = () => {
   let sinceLastTweet = 0;
 
   const checkTweets = (data) => {
-    fetch("http://localhost:3003/twitter")
+    fetch("http://avalon.local:3003/twitter")
       .then((response) => {
         return response.json();
       })

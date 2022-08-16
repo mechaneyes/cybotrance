@@ -1,22 +1,31 @@
+@import "../../styles/breakpoints.scss";
 @import "../../styles/fonts.scss";
 
 .time {
-    display: flex;
-    justify-content: flex-end;
-    align-items: baseline;
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
 
-    &__date {
-        @include tachyon-light;
-        font-size: 2rem;
+  &__date {
+    @include tachyon-light;
+    font-size: 2rem;
+  }
+
+  &__time {
+    margin: 0;
+    padding-right: 0.8vw;
+    padding-bottom: 7px;
+    @include tachyon-thin;
+    font-size: 1.8rem;
+    color: white;
+
+    @include bp(xxs) {
+      font-size: 2.3rem;
     }
 
-    &__time {
-        margin: 0;
-        padding-right: 0.8vw;
-        padding-bottom: 10px;
-        @include tachyon-thin;
-        // @include tachyon-light;
-        font-size: 2.9rem;
-        color: white;
+    @include bp(xs) {
+      padding-bottom: 10px;
+      font-size: 2.9rem;
     }
+  }
 }
