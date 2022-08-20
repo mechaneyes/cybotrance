@@ -1,45 +1,34 @@
+import https from "https";
+import axios from "axios";
 import { useState, useEffect } from "react";
 import "./Twitter.scss";
 
 // https://twitter.com/howltweeter
 
 const Twitter = () => {
-  const [tweet, setTweet] = useState("Allen Ginsberg was here");
-  const [tweetTime, setTweetTime] = useState(0)
+  const tempTweet =
+    "Moloch the incomprehensible prison! Moloch the crossbone soulless jailhouse and Congress of sorrows! Moloch whose buildings are judgement! Moloch the vast stone of war! Moloch the stunned governments!";
+  const [tweet, setTweet] = useState(tempTweet);
+  const [tweetTime, setTweetTime] = useState("0s");
+  let lastId = 1560884341714178049;
+  let start = Date.now();
+  let delta;
 
-  // const twitterClient = new TwitterClient({
-  //   apiKey: process.env.REACT_APP_TWITTER_CONSUMER_KEY,
-  //   apiSecret: process.env.REACT_APP_TWITTER_CONSUMER_SECRET,
-  //   accessToken: process.env.REACT_APP_TWITTER_ACCESS_TOKEN,
-  //   accessTokenSecret: process.env.REACT_APP_TWITTER_ACCESS_TOKEN_SECRET,
-  // });
-
-  let mostRecentID;
-  let sinceLastTweet = 0;
-
-  const checkTweets = (data) => {
+  let checkTweets = () => {
     fetch("http://avalon.local:3003/twitter")
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        // console.log(data.data[0]);
-        let incomingID = data.data[0].id;
+        console.log(data);
 
-        if (incomingID == mostRecentID) {
-          // Check every 30 seconds, but only update frontend every 60
-          // 
-          sinceLastTweet += 0.5;
-          sinceLastTweet % 1 == 0 ? setTweetTime(sinceLastTweet) : ''
+        if (data.id !== lastId) {
+          setTweet(data.text);
 
-          console.log("sinceLastTweet", sinceLastTweet);
-        } else {
-          setTweet(data.data[0].text)
+          lastId = data.id;
+          setTweetTime("0");
+          start = Date.now();
 
-          mostRecentID = incomingID;
-          setTweetTime(0)
-          sinceLastTweet = 0
-          
           console.log("new howl");
         }
       })
@@ -48,12 +37,31 @@ const Twitter = () => {
       });
   };
 
+  // setTimeout() and setInterval() cannot be trusted. Date + delta instead
+  // https://stackoverflow.com/a/29972322
+  //
+  let looper = () => {
+    // console.log(Math.floor(delta / 1000));
+    delta = Date.now() - start;
+
+    if (Math.floor(delta / 1000 < 60)) {
+      setTweetTime(Math.floor(delta / 1000) + "s");
+    } else {
+      setTweetTime(Math.floor(delta / 60000) + "m");
+    }
+
+    if (Math.floor(delta / 1000) % 60 === 0) {
+      console.log("uno minuto");
+      checkTweets();
+    }
+  };
+  
   useEffect(() => {
     checkTweets();
-    const interval = setInterval(() => {
-      checkTweets();
-    }, 30000);
-    return () => clearInterval(interval);
+
+    setInterval(() => {
+      looper();
+    }, 1000);
   }, []);
 
   return (
@@ -62,7 +70,7 @@ const Twitter = () => {
       <div className="twitter__meta">
         <p className="twitter__handle">@HowlTweeter </p>
         <p className="twitter__middot">&middot;</p>
-        <p className="twitter__timestamp">{tweetTime}m</p>
+        <p className="twitter__timestamp">{tweetTime}</p>
       </div>
     </section>
   );

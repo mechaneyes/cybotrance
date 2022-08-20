@@ -81,10 +81,14 @@ app.get("/twitter", async (req, res, next) => {
     },
   };
 
-  const url = "https://api.twitter.com/2/users/208585808/tweets";
+  // const url = "https://api.twitter.com/2/users/208585808/tweets";
+  let twitterUrl =
+    "https://api.twitter.com/2/users/208585808/tweets?max_results=5&since_id=";
+  let lastId = 1560884341714178049;
+  twitterUrl = twitterUrl + lastId;
 
-  const { data: twitterData } = await axios
-    .get(url, twitterConfig)
+  let { data: returnedTweets } = await axios
+    .get(twitterUrl, twitterConfig)
     .catch(function (error) {
       if (error.response) {
         // The request was made and the server responded with a status code
@@ -94,8 +98,8 @@ app.get("/twitter", async (req, res, next) => {
         console.log(error.response.headers);
       } else if (error.request) {
         // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        // http.ClientRequest in node.js
+        // `error.request` is an instance of XMLHttpRequest in the browser 
+        // and an instance of http.ClientRequest in node.js
         console.log(error.request);
       } else {
         // Something happened in setting up the request that triggered an Error
@@ -104,29 +108,14 @@ app.get("/twitter", async (req, res, next) => {
       console.log(error.config);
     });
 
-  res.json(twitterData);
-
-  // axios({
-  //   method: "get",
-  //   url: "https://api.twitter.com/2/users/208585808/tweets",
-  //   config: {
-  //     timeout: 60000,
-  //     httpsAgent: new https.Agent({ keepAlive: true }),
-  //     headers: {
-  //       Authorization: "Bearer " + process.env.TWITTER_BEARER_TOKEN,
-  //       Cookie: "guest_id=v1%3A166054213299708709",
-  //     },
-  //   },
-  // })
-  //   .then(function (response) {
-  //     //handle success
-  //     console.log(response.data);
-  //     // res.json(response);
-  //   })
-  //   .catch(function (response) {
-  //     //handle error
-  //     console.log(response);
-  //   });
+  if (returnedTweets.data[0].id !== lastId) {
+    lastId = returnedTweets.data[0].id;
+    console.log("new tweet posted: ", lastId);
+    res.json(returnedTweets.data[0]);
+  } else {
+    console.log("not updated", lastId);
+    res.json(returnedTweets.data[0]);
+  }
 });
 
 // ————————————————————————————————————o————————————————————————————————————o Listen -->
