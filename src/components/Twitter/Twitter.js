@@ -1,5 +1,3 @@
-import https from "https";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import "./Twitter.scss";
 
@@ -26,7 +24,7 @@ const Twitter = () => {
           setTweet(data.text);
 
           lastId = data.id;
-          setTweetTime("0");
+          setTweetTime("0s");
           start = Date.now();
 
           console.log("new howl");
@@ -41,7 +39,7 @@ const Twitter = () => {
   // https://stackoverflow.com/a/29972322
   //
   let looper = () => {
-    // console.log(Math.floor(delta / 1000));
+    console.log(Math.floor(delta / 1000));
     delta = Date.now() - start;
 
     if (Math.floor(delta / 1000 < 60)) {
@@ -50,8 +48,8 @@ const Twitter = () => {
       setTweetTime(Math.floor(delta / 60000) + "m");
     }
 
-    if (Math.floor(delta / 1000) % 60 === 0) {
-      console.log("uno minuto");
+    if (Math.floor(delta / 1000) % 120 === 0) {
+      console.log("dos minutos");
       checkTweets();
     }
   };

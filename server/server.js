@@ -84,7 +84,7 @@ app.get("/twitter", async (req, res, next) => {
   // const url = "https://api.twitter.com/2/users/208585808/tweets";
   let twitterUrl =
     "https://api.twitter.com/2/users/208585808/tweets?max_results=5&since_id=";
-  let lastId = 1560884341714178049;
+  let lastId = 1560899440340516864;
   twitterUrl = twitterUrl + lastId;
 
   let { data: returnedTweets } = await axios
@@ -98,7 +98,7 @@ app.get("/twitter", async (req, res, next) => {
         console.log(error.response.headers);
       } else if (error.request) {
         // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser 
+        // `error.request` is an instance of XMLHttpRequest in the browser
         // and an instance of http.ClientRequest in node.js
         console.log(error.request);
       } else {
@@ -108,18 +108,11 @@ app.get("/twitter", async (req, res, next) => {
       console.log(error.config);
     });
 
-  if (returnedTweets.data[0].id !== lastId) {
-    lastId = returnedTweets.data[0].id;
-    console.log("new tweet posted: ", lastId);
-    res.json(returnedTweets.data[0]);
-  } else {
-    console.log("not updated", lastId);
-    res.json(returnedTweets.data[0]);
-  }
+  res.json(returnedTweets.data[0]);
 });
 
 // ————————————————————————————————————o————————————————————————————————————o Listen -->
 // ————————————————————————————————————o Listen —>
 app.listen(port, () => {
-  console.log(`Weather app listening on port ${port}`);
+  console.log(`Twitter+Weather server listening on port ${port}`);
 });
