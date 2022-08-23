@@ -1,6 +1,8 @@
 # Cybotrance
 ### BK Apt Dashboard
 
+![Screen Recording](./screenrecording.mp4)
+
 ![Figma Sketches](./screenshot-figma.gif)
 
 <br>

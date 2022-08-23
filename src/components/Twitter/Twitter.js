@@ -31,7 +31,7 @@ const Twitter = () => {
         }
       })
       .catch((err) => {
-        console.log("error retrieving data", err);
+        console.log("error retrieving data ", Date.now(), err);
       });
   };
 
