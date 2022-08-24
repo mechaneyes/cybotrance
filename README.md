@@ -14,6 +14,13 @@ This is a dashboard running in the entryway inside my apartment.
 
 The dashboard presents the current time, weather and humidity (an important bit of data when living through NYC summers). It also presents the most recent tweet from https://twitter.com/howltweeter, and has a JS animation running to keep things kinetic.
 
+Married to the face of the display is a one-way mirror. Essentially it reflects everything that has darker colors on the screen behind it, and presents information with lighter colors covering any reflections.
+
+This is an earlier iteration of the project:
+
+[![Watch the video](https://img.youtube.com/vi/Gidd_8gk7Yo/maxresdefault.jpg)](https://youtu.be/Gidd_8gk7Yo)
+👆 video on youtube 👆
+
 <br>
 
 ## Weather
@@ -25,13 +32,13 @@ I'd originally built something similar using the Weather Underground API. That f
 I plan on running tweet streams from different bots on the dashboard ... looking to incorporate narratives stretched out over time, and accessed by me asynchronously. For now I've settled on @howltweeter.
 
 
-### THE RIGHT SORT
-My original idea was to stream [THE RIGHT SORT](https://twitter.com/SceptreBooks/timelines/488586138048004096) one tweet each day. I may fold this into Cybotrance a bit later, but Howl, because it's regularly posting, seemed like an easy integration now.
-
-
 ### @howltweeter
 https://twitter.com/howltweeter
 "All of Allen Ginsberg's Howl, One Line Every Hour, Over and Over."
+
+
+### THE RIGHT SORT
+My original idea was to stream [THE RIGHT SORT](https://twitter.com/SceptreBooks/timelines/488586138048004096) one tweet each day. I may fold this into Cybotrance a bit later, but Howl, because it's regularly posting, seemed like an easy integration now.
 
 
 ### Visual Artists

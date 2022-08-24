@@ -13,7 +13,7 @@ const Twitter = () => {
   let delta;
 
   let checkTweets = () => {
-    fetch("http://avalon.local:3003/twitter")
+    fetch("http://localhost:3003/twitter")
       .then((response) => {
         return response.json();
       })
