@@ -1,7 +1,9 @@
 # Cybotrance
 ### BK Apt Dashboard
 
-![Screen Recording](./screenrecording.mp4)
+
+https://user-images.githubusercontent.com/46533657/186288905-a2b9d195-f923-4d10-83de-ccef49ff5716.mp4
+
 
 ![Figma Sketches](./screenshot-figma.gif)
 
