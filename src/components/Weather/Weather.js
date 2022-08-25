@@ -84,6 +84,7 @@ const Weather = () => {
 
   // ————————————————————————————————————o————————————————————————————————————o Current Weather -->
   // ————————————————————————————————————o Current Weather —>
+  // 
   const loopCurrent = () => {
     fetch("http://localhost:3003/current")
       .then((response) => {
@@ -104,6 +105,7 @@ const Weather = () => {
 
   // ————————————————————————————————————o————————————————————————————————————o Hourly Weather -->
   // ————————————————————————————————————o Hourly Weather —>
+  // 
   const loopForecast = () => {
     fetch("http://localhost:3003/hourly")
       .then((response) => {
@@ -135,13 +137,14 @@ const Weather = () => {
 
   // ————————————————————————————————————o————————————————————————————————————o Refresh Weather -->
   // ————————————————————————————————————o Refresh Weather —>
+  // 
   useEffect(() => {
     loopCurrent();
     loopForecast();
     const interval = setInterval(() => {
       loopCurrent();
       loopForecast();
-    }, 30000);
+    }, 240000);
     return () => clearInterval(interval);
   }, []);
 

@@ -16,10 +16,9 @@ The dashboard presents the current time, weather and humidity (an important bit 
 
 Married to the face of the display is a one-way mirror. Essentially it reflects everything that has darker colors on the screen behind it, and presents information with lighter colors covering any reflections.
 
-This is an earlier iteration of the project:
+### 👇 YouTube video of an earlier iteration of the project 👇
 
 [![Watch the video](https://img.youtube.com/vi/Gidd_8gk7Yo/maxresdefault.jpg)](https://youtu.be/Gidd_8gk7Yo)
-👆 video on youtube 👆
 
 <br>
 

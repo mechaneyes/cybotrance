@@ -31,7 +31,10 @@ const Twitter = () => {
         }
       })
       .catch((err) => {
-        console.log("error retrieving data ", Date.now(), err);
+        const now = new Date();
+        const current = now.getHours() + ":" + now.getMinutes();
+        // console.log(current);
+        console.log("error retrieving data ", current, err);
       });
   };
 
@@ -48,12 +51,14 @@ const Twitter = () => {
       setTweetTime(Math.floor(delta / 60000) + "m");
     }
 
-    if (Math.floor(delta / 1000) % 120 === 0) {
-      console.log("dos minutos");
+    if (Math.floor(delta / 1000) % 240 === 0) {
+      const now = new Date();
+      const current = now.getHours() + ":" + now.getMinutes();
+      console.log("quatro minutos: checkTweets", current);
       checkTweets();
     }
   };
-  
+
   useEffect(() => {
     checkTweets();
 

@@ -11,9 +11,10 @@ const port = 3003;
 
 app.use(cors());
 
-// ————————————————————————————————————o————————————————————————————————————o create signed token -->
-// ————————————————————————————————————o create signed token —>
-let createToken = () => {
+// ————————————————————————————————————o————————————————————————————————————o create signed twitter token -->
+// ————————————————————————————————————o create signed twitter token —>
+//
+let weatherToken = () => {
   const privateKey = fs.readFileSync(__dirname + "/AuthKey_257TYZZU8P.p8");
 
   const token = jwt.sign(
@@ -39,18 +40,45 @@ let createToken = () => {
   };
 };
 
+// ————————————————————————————————————o————————————————————————————————————o Axios Errors -->
+// ————————————————————————————————————o Axios Errors —>
+//
+const axiosErrors = (error) => {
+  if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    console.log("Error data", error.response.data);
+    console.log("Error status", error.response.status);
+    console.log("Error headers", error.response.headers);
+  } else if (error.request) {
+    // The request was made but no response was received
+    // `error.request` is an instance of XMLHttpRequest in the browser
+    // and an instance of http.ClientRequest in node.js
+    console.log("Error request", error.request);
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    console.log("Error message", error.message);
+  }
+  console.log(error.config);
+};
+
 // ————————————————————————————————————o————————————————————————————————————o Current Weather -->
 // ————————————————————————————————————o Current Weather —>
+//
 app.get("/current", async (req, res, next) => {
-  let config = createToken();
+  let config = weatherToken();
 
-  // Reference Time Zones:
+  // Time Zones Reference:
   // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  const url =
+  //
+  const weatherUrl =
     "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=currentWeather&timezone=Americas/Los_Angeles";
 
-  // get the data
-  const { data: weatherData } = await axios.get(url, config);
+  const { data: weatherData } = await axios
+    .get(weatherUrl, config)
+    .catch((error) => {
+      axiosErrors(error);
+    });
   //console.log(weatherData);
 
   // return the data to front end
@@ -59,18 +87,24 @@ app.get("/current", async (req, res, next) => {
 
 // ————————————————————————————————————o————————————————————————————————————o Hourly Weather -->
 // ————————————————————————————————————o Hourly Weather —>
+//
 app.get("/hourly", async (req, res, next) => {
-  let config = createToken();
+  let config = weatherToken();
 
-  const url =
+  const weatherUrl =
     "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=forecastHourly&timeZone=America/Los_Angeles";
 
-  const { data: weatherData } = await axios.get(url, config);
+  const { data: weatherData } = await axios
+    .get(weatherUrl, config)
+    .catch((error) => {
+      axiosErrors(error);
+    });
   res.json(weatherData);
 });
 
 // ————————————————————————————————————o————————————————————————————————————o Twitter -->
 // ————————————————————————————————————o Twitter —>
+//
 app.get("/twitter", async (req, res, next) => {
   const twitterConfig = {
     timeout: 60000,
@@ -81,7 +115,6 @@ app.get("/twitter", async (req, res, next) => {
     },
   };
 
-  // const url = "https://api.twitter.com/2/users/208585808/tweets";
   let twitterUrl =
     "https://api.twitter.com/2/users/208585808/tweets?max_results=5&since_id=";
   let lastId = 1560899440340516864;
@@ -89,23 +122,8 @@ app.get("/twitter", async (req, res, next) => {
 
   let { data: returnedTweets } = await axios
     .get(twitterUrl, twitterConfig)
-    .catch(function (error) {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-      } else if (error.request) {
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser
-        // and an instance of http.ClientRequest in node.js
-        console.log(error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.log("Error", error.message);
-      }
-      console.log(error.config);
+    .catch((error) => {
+      axiosErrors(error);
     });
 
   res.json(returnedTweets.data[0]);
@@ -113,6 +131,7 @@ app.get("/twitter", async (req, res, next) => {
 
 // ————————————————————————————————————o————————————————————————————————————o Listen -->
 // ————————————————————————————————————o Listen —>
+//
 app.listen(port, () => {
   console.log(`Twitter+Weather server listening on port ${port}`);
 });
