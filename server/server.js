@@ -15,7 +15,7 @@ app.use(cors());
 // ————————————————————————————————————o————————————————————————————————————o create signed twitter token -->
 // ————————————————————————————————————o create signed twitter token —>
 //
-let weatherToken = () => {
+const weatherToken = () => {
   const privateKey = fs.readFileSync(__dirname + "/AuthKey_257TYZZU8P.p8");
 
   const token = jwt.sign(
@@ -33,16 +33,41 @@ let weatherToken = () => {
       },
     }
   );
-
-  // return {
-  //   timeout: 60000,
-  //   httpsAgent: new https.Agent({ keepAlive: true }),
-  //   headers: { Authorization: `Bearer ${token}` },
-  // };
-
+  
   return {
     Authorization: `Bearer ${token}`,
   };
+};
+
+// ————————————————————————————————————o————————————————————————————————————o All Weathers Fetcher -->
+// ————————————————————————————————————o All Weathers Fetcher —>
+//
+const fetchWeather = (res, dataset) => {
+  const config = weatherToken();
+
+  // Time Zones Reference:
+  // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  //
+  fetch(
+    "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=" +
+      dataset +
+      "&timezone=Americas/Los_Angeles",
+    {
+      method: "GET",
+      headers: config,
+    }
+  )
+    .then((response) => {
+      return response.json();
+    })
+    // return the data to front end
+    .then((data) => {
+      // console.log(data);
+      res.json(data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 };
 
 // ————————————————————————————————————o————————————————————————————————————o Axios Errors -->
@@ -71,53 +96,14 @@ const axiosErrors = (error) => {
 // ————————————————————————————————————o Current Weather —>
 //
 app.get("/current", async (req, res, next) => {
-  const config = weatherToken();
-
-  // Time Zones Reference:
-  // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  //
-  await fetch(
-    "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=currentWeather&timezone=Americas/Los_Angeles",
-    {
-      method: "GET",
-      headers: config,
-    }
-  )
-    .then((response) => {
-      return response.json();
-    })
-    // return the data to front end
-    .then((data) => {
-      // console.log(data);
-      res.json(data)
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  await fetchWeather(res, "currentWeather");
 });
 
 // ————————————————————————————————————o————————————————————————————————————o Hourly Weather -->
 // ————————————————————————————————————o Hourly Weather —>
 //
 app.get("/hourly", async (req, res, next) => {
-  const config = weatherToken();
-
-  await fetch(
-    "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=forecastHourly&timeZone=America/Los_Angeles",
-    {
-      method: "GET",
-      headers: config,
-    }
-  )
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      res.json(data)
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  await fetchWeather(res, "forecastHourly");
 });
 
 // ————————————————————————————————————o————————————————————————————————————o Twitter -->
