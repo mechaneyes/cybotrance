@@ -76,19 +76,6 @@ app.get("/current", async (req, res, next) => {
   // Time Zones Reference:
   // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   //
-  // const weatherUrl =
-  //   "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=currentWeather&timezone=Americas/Los_Angeles";
-
-  // const { data: weatherData } = await axios
-  //   .get(weatherUrl, config)
-  //   .catch((error) => {
-  //     axiosErrors(error);
-  //   });
-  // //console.log(weatherData);
-
-  // // return the data to front end
-  // res.json(weatherData);
-
   await fetch(
     "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=currentWeather&timezone=Americas/Los_Angeles",
     {
@@ -115,20 +102,6 @@ app.get("/current", async (req, res, next) => {
 app.get("/hourly", async (req, res, next) => {
   const config = weatherToken();
 
-  // const weatherUrl =
-  //   "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=forecastHourly&timeZone=America/Los_Angeles";
-
-  // const { data: weatherData } = await axios
-  //   .get(weatherUrl, config)
-  //   // .then((response) => {
-  //   //   console.log('response', response)
-  //   // })
-  //   .catch((error) => {
-  //     axiosErrors(error);
-  //   });
-
-  // res.json(weatherData);
-
   await fetch(
     "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=forecastHourly&timeZone=America/Los_Angeles",
     {
@@ -139,7 +112,6 @@ app.get("/hourly", async (req, res, next) => {
     .then((response) => {
       return response.json();
     })
-    // return the data to front end
     .then((data) => {
       res.json(data)
     })
