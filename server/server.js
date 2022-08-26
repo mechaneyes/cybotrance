@@ -1,6 +1,7 @@
 const express = require("express");
 const https = require("node:https");
 const axios = require("axios");
+const fetch = require("node-fetch");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 let cors = require("cors");
@@ -33,10 +34,14 @@ let weatherToken = () => {
     }
   );
 
+  // return {
+  //   timeout: 60000,
+  //   httpsAgent: new https.Agent({ keepAlive: true }),
+  //   headers: { Authorization: `Bearer ${token}` },
+  // };
+
   return {
-    timeout: 60000,
-    httpsAgent: new https.Agent({ keepAlive: true }),
-    headers: { Authorization: `Bearer ${token}` },
+    Authorization: `Bearer ${token}`,
   };
 };
 
@@ -66,40 +71,81 @@ const axiosErrors = (error) => {
 // ————————————————————————————————————o Current Weather —>
 //
 app.get("/current", async (req, res, next) => {
-  let config = weatherToken();
+  const config = weatherToken();
 
   // Time Zones Reference:
   // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   //
-  const weatherUrl =
-    "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=currentWeather&timezone=Americas/Los_Angeles";
+  // const weatherUrl =
+  //   "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=currentWeather&timezone=Americas/Los_Angeles";
 
-  const { data: weatherData } = await axios
-    .get(weatherUrl, config)
-    .catch((error) => {
-      axiosErrors(error);
+  // const { data: weatherData } = await axios
+  //   .get(weatherUrl, config)
+  //   .catch((error) => {
+  //     axiosErrors(error);
+  //   });
+  // //console.log(weatherData);
+
+  // // return the data to front end
+  // res.json(weatherData);
+
+  await fetch(
+    "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=currentWeather&timezone=Americas/Los_Angeles",
+    {
+      method: "GET",
+      headers: config,
+    }
+  )
+    .then((response) => {
+      return response.json();
+    })
+    // return the data to front end
+    .then((data) => {
+      // console.log(data);
+      res.json(data)
+    })
+    .catch((err) => {
+      console.error(err);
     });
-  //console.log(weatherData);
-
-  // return the data to front end
-  res.json(weatherData);
 });
 
 // ————————————————————————————————————o————————————————————————————————————o Hourly Weather -->
 // ————————————————————————————————————o Hourly Weather —>
 //
 app.get("/hourly", async (req, res, next) => {
-  let config = weatherToken();
+  const config = weatherToken();
 
-  const weatherUrl =
-    "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=forecastHourly&timeZone=America/Los_Angeles";
+  // const weatherUrl =
+  //   "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=forecastHourly&timeZone=America/Los_Angeles";
 
-  const { data: weatherData } = await axios
-    .get(weatherUrl, config)
-    .catch((error) => {
-      axiosErrors(error);
+  // const { data: weatherData } = await axios
+  //   .get(weatherUrl, config)
+  //   // .then((response) => {
+  //   //   console.log('response', response)
+  //   // })
+  //   .catch((error) => {
+  //     axiosErrors(error);
+  //   });
+
+  // res.json(weatherData);
+
+  await fetch(
+    "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=forecastHourly&timeZone=America/Los_Angeles",
+    {
+      method: "GET",
+      headers: config,
+    }
+  )
+    .then((response) => {
+      return response.json();
+    })
+    // return the data to front end
+    .then((data) => {
+      res.json(data)
+    })
+    .catch((err) => {
+      console.error(err);
     });
-  res.json(weatherData);
 });
 
 // ————————————————————————————————————o————————————————————————————————————o Twitter -->

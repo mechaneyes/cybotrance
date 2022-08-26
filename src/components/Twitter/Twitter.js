@@ -13,12 +13,13 @@ const Twitter = () => {
   let delta;
 
   let checkTweets = () => {
-    fetch("http://localhost:3003/twitter")
+    // fetch("http://localhost:3003/twitter")
+    fetch("http://avalon.local:3003/twitter")
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
 
         if (data.id !== lastId) {
           setTweet(data.text);
@@ -42,7 +43,7 @@ const Twitter = () => {
   // https://stackoverflow.com/a/29972322
   //
   let looper = () => {
-    console.log(Math.floor(delta / 1000));
+    // console.log(Math.floor(delta / 1000));
     delta = Date.now() - start;
 
     if (Math.floor(delta / 1000 < 60)) {

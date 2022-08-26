@@ -86,12 +86,13 @@ const Weather = () => {
   // ————————————————————————————————————o Current Weather —>
   // 
   const loopCurrent = () => {
-    fetch("http://localhost:3003/current")
+    // fetch("http://localhost:3003/current")
+    fetch("http://avalon.local:3003/current")
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        // console.log(data);
+        // console.log('data', data);
 
         setCurrTemp(cToF(parseFloat(data.currentWeather.temperature)));
         setCurrHumid(
@@ -107,12 +108,13 @@ const Weather = () => {
   // ————————————————————————————————————o Hourly Weather —>
   // 
   const loopForecast = () => {
-    fetch("http://localhost:3003/hourly")
+    // fetch("http://localhost:3003/hourly")
+    fetch("http://avalon.local:3003/hourly")
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        // console.log(data);
+        console.log(data);
         // console.log('data.forecastHourly', data.forecastHourly)
 
         setHourlyArray((current) =>
@@ -131,7 +133,7 @@ const Weather = () => {
         );
       })
       .catch((err) => {
-        console.log("error retrieving data", err);
+        console.log("ERRORERRORERROR error retrieving data", err);
       });
   };
 
@@ -144,7 +146,7 @@ const Weather = () => {
     const interval = setInterval(() => {
       loopCurrent();
       loopForecast();
-    }, 240000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
