@@ -12,6 +12,7 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
+    window.location.reload(false);
     // You can also log the error to an error reporting service
     logErrorToMyService(error, errorInfo);
   }

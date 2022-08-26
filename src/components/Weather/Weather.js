@@ -114,7 +114,7 @@ const Weather = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         // console.log('data.forecastHourly', data.forecastHourly)
 
         setHourlyArray((current) =>
@@ -133,7 +133,7 @@ const Weather = () => {
         );
       })
       .catch((err) => {
-        console.log("ERRORERRORERROR error retrieving data", err);
+        console.log("error retrieving data", err);
       });
   };
 
@@ -146,7 +146,7 @@ const Weather = () => {
     const interval = setInterval(() => {
       loopCurrent();
       loopForecast();
-    }, 1000);
+    }, 120000);
     return () => clearInterval(interval);
   }, []);
 

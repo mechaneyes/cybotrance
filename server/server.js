@@ -12,6 +12,13 @@ const port = 3003;
 
 app.use(cors());
 
+// ————————————————————————————————————o Assigned Reading —>
+// 
+// Writing middleware for use in Express apps
+// http://expressjs.com/en/guide/writing-middleware.html
+// 
+// 
+
 // ————————————————————————————————————o————————————————————————————————————o create signed twitter token -->
 // ————————————————————————————————————o create signed twitter token —>
 //

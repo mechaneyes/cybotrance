@@ -55,7 +55,7 @@ const Twitter = () => {
     if (Math.floor(delta / 1000) % 240 === 0) {
       const now = new Date();
       const current = now.getHours() + ":" + now.getMinutes();
-      console.log("quatro minutos: checkTweets", current);
+      console.log("checkTweets", current);
       checkTweets();
     }
   };
