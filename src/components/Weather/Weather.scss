@@ -17,7 +17,7 @@
 
   &__humidity {
     margin: 0;
-    @include tachyon-light;
+    @include tachyon-thin;
     font-size: 1.5rem;
     color: white;
     line-height: 1.8rem;
@@ -26,7 +26,7 @@
   &__temp {
     margin: 0;
     padding-left: 20px;
-    @include tachyon-light;
+    @include tachyon-thin;
     font-size: 3rem;
     line-height: 3rem;
   }
