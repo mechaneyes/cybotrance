@@ -23,11 +23,7 @@ app.use(cors());
 // ————————————————————————————————————o create signed twitter token —>
 //
 const weatherToken = () => {
-<<<<<<< HEAD
-  const privateKey = fs.readFileSync(__dirname + "/AuthKey_257TYZZU8P.p8");
-=======
-  const privateKey = fs.readFileSync(__dirname + "/AuthKey_Q6P8KT23R8.p8");
->>>>>>> 0fd9749 (built poem array + poem display + weather api)
+  const privateKey = fs.readFileSync(__dirname + "/AuthKey_B5RUZ9LF74.p8");
 
   const token = jwt.sign(
     {
@@ -37,11 +33,7 @@ const weatherToken = () => {
     {
       issuer: "V8K2ALDM25", // TeamID via developer account
       expiresIn: "1h", // 1 hour of validity
-<<<<<<< HEAD
-      keyid: "257TYZZU8P", // ID for the created key
-=======
-      keyid: "Q6P8KT23R8", // ID for the created key
->>>>>>> 0fd9749 (built poem array + poem display + weather api)
+      keyid: "B5RUZ9LF74", // ID for the created key
       algorithm: "ES256", // Apple algorithm
       header: {
         id: "V8K2ALDM25.com.mechaneyes.cybotrance",
@@ -62,11 +54,12 @@ const fetchWeather = (res, dataset) => {
 
   // Time Zones Reference:
   // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  // https://www.google.com/maps/place/Fort+Greene+Park/@40.6842269,-73.9712484,15z/
   //
   fetch(
-    "https://weatherkit.apple.com/api/v1/weather/en/38.5816/-121.4944?dataSets=" +
+    "https://weatherkit.apple.com/api/v1/weather/en/40.6842269/-73.9712484?dataSets=" +
       dataset +
-      "&timezone=Americas/Los_Angeles",
+      "&timezone=America/New_York",
     {
       method: "GET",
       headers: config,
@@ -119,33 +112,6 @@ app.get("/current", async (req, res, next) => {
 //
 app.get("/hourly", async (req, res, next) => {
   await fetchWeather(res, "forecastHourly");
-});
-
-// ————————————————————————————————————o————————————————————————————————————o Twitter -->
-// ————————————————————————————————————o Twitter —>
-//
-app.get("/twitter", async (req, res, next) => {
-  const twitterConfig = {
-    timeout: 60000,
-    httpsAgent: new https.Agent({ keepAlive: true }),
-    headers: {
-      Authorization: "Bearer " + process.env.TWITTER_BEARER_TOKEN,
-      Cookie: "guest_id=v1%3A166054213299708709",
-    },
-  };
-
-  let twitterUrl =
-    "https://api.twitter.com/2/users/208585808/tweets?max_results=5&since_id=";
-  let lastId = 1560899440340516864;
-  twitterUrl = twitterUrl + lastId;
-
-  let { data: returnedTweets } = await axios
-    .get(twitterUrl, twitterConfig)
-    .catch((error) => {
-      axiosErrors(error);
-    });
-
-  res.json(returnedTweets.data[0]);
 });
 
 // ————————————————————————————————————o————————————————————————————————————o Listen -->
