@@ -23,7 +23,11 @@ app.use(cors());
 // ————————————————————————————————————o create signed twitter token —>
 //
 const weatherToken = () => {
+<<<<<<< HEAD
   const privateKey = fs.readFileSync(__dirname + "/AuthKey_257TYZZU8P.p8");
+=======
+  const privateKey = fs.readFileSync(__dirname + "/AuthKey_Q6P8KT23R8.p8");
+>>>>>>> 0fd9749 (built poem array + poem display + weather api)
 
   const token = jwt.sign(
     {
@@ -33,7 +37,11 @@ const weatherToken = () => {
     {
       issuer: "V8K2ALDM25", // TeamID via developer account
       expiresIn: "1h", // 1 hour of validity
+<<<<<<< HEAD
       keyid: "257TYZZU8P", // ID for the created key
+=======
+      keyid: "Q6P8KT23R8", // ID for the created key
+>>>>>>> 0fd9749 (built poem array + poem display + weather api)
       algorithm: "ES256", // Apple algorithm
       header: {
         id: "V8K2ALDM25.com.mechaneyes.cybotrance",

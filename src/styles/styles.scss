@@ -1,5 +1,7 @@
+@import "breakpoints";
+@import "fonts";
+@import "weather";
 @import url("https://use.typekit.net/xrm4wsy.css");
-@import "./styles/breakpoints.scss";
 
 * {
   box-sizing: border-box;
@@ -35,7 +37,7 @@
   }
 
   @include bp(xs) {
-    padding: 60px;
+    padding: 80px;
   }
 }
 
@@ -43,4 +45,42 @@ canvas {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.whitman {
+  position: absolute;
+  bottom: 80px;
+  width: calc(100vw - 160px);
+
+  p {
+    @include tachyon-thin;
+    font-size: 3rem;
+    line-height: 1.4;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 500ms ease-in-out;
+}
+
+.fade-out {
+  animation: fadeOut 500ms ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }

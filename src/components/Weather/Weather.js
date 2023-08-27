@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "./Weather.scss";
 
 const Weather = () => {
   // ————————————————————————————————————o Precip Formatting —>
