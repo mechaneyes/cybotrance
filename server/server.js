@@ -23,7 +23,10 @@ app.use(cors());
 // ————————————————————————————————————o create signed twitter token —>
 //
 const weatherToken = () => {
-  const privateKey = fs.readFileSync(__dirname + "/AuthKey_B5RUZ9LF74.p8");
+  // const privateKey = fs.readFileSync(__dirname + "/AuthKey_B5RUZ9LF74.p8");
+  
+  // WEATHERKIT_API_KEY
+  const privateKey = fs.readFileSync(__dirname + "/" + process.env.WEATHERKIT_API_KEY);
 
   const token = jwt.sign(
     {
