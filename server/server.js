@@ -23,11 +23,11 @@ app.use(cors());
 // ————————————————————————————————————o create signed twitter token —>
 //
 const weatherToken = () => {
-  // const privateKey = fs.readFileSync(__dirname + "/AuthKey_B5RUZ9LF74.p8");
+  const privateKey = fs.readFileSync(__dirname + "/AuthKey_B5RUZ9LF74.p8");
   
   // WEATHERKIT_API_KEY
   // const privateKey = fs.readFileSync(__dirname + "/" + process.env.REACT_APP_WEATHERKIT_API_KEY);
-  const privateKey = process.env.REACT_APP_WEATHERKIT_API_KEY
+  // const privateKey = process.env.REACT_APP_WEATHERKIT_API_KEY
   // const privateKey = new Buffer(process.env.REACT_APP_WEATHERKIT_API_KEY, 'base64')
 
 
@@ -124,5 +124,5 @@ app.get("/hourly", async (req, res, next) => {
 // ————————————————————————————————————o Listen —>
 //
 app.listen(port, () => {
-  console.log(`Twitter+Weather server listening on port ${port}`);
+  console.log(`Whitman + Weather server listening on port ${port}`);
 });

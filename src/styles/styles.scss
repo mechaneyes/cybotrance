@@ -1,5 +1,6 @@
 @import "breakpoints";
 @import "fonts";
+@import "time";
 @import "weather";
 @import url("https://use.typekit.net/xrm4wsy.css");
 
@@ -33,7 +34,7 @@
   // }
 
   @include bp(xxs) {
-    padding: 30px;
+    padding: 2.5rem;
   }
 
   @include bp(xs) {
@@ -49,10 +50,11 @@ canvas {
 
 .whitman {
   position: absolute;
-  bottom: 80px;
+  bottom: 4rem;
   width: calc(100vw - 160px);
 
   p {
+    margin: 0;
     @include tachyon-thin;
     font-size: 3rem;
     line-height: 1.4;

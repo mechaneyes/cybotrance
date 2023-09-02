@@ -4,6 +4,7 @@
   justify-content: flex-start;
   align-items: flex-end;
   width: 100%;
+  margin-left: 0.8rem;
 }
 
 .weather-top {
@@ -29,7 +30,7 @@
   }
 
   @include bp(xxs) {
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
 
     .weather-top__humidity {
       font-size: 1.8rem;
@@ -101,14 +102,15 @@
   }
 
   @include bp(xxs) {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     gap: 25px;
+    width: 100%;
 
     .lineup__item {
       display: flex;
 
       &:nth-child(n+6) {
-        display: none;
+        // display: none;
       }
     }
 

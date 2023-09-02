@@ -90,7 +90,7 @@ const Weather = () => {
         return response.json();
       })
       .then((data) => {
-        // console.log('data', data);
+        console.log('data', data);
 
         setCurrTemp(cToF(parseFloat(data.currentWeather.temperature)));
         setCurrHumid(
