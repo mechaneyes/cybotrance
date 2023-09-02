@@ -5,7 +5,6 @@
 
 
 import { useState, useEffect } from 'react';
-import './Time.scss';
 
 function Time() {
     const [dateState, setDateState] = useState(new Date());

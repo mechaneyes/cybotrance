@@ -21,7 +21,7 @@ const Whitman = () => {
           setFadeIn(false);
         }, 1000); // 1 second
       }, 500);
-    }, 10000); // 10 seconds
+    }, 12000);
 
     // Clear the timer when the component is unmounted
     return () => clearInterval(timer);
